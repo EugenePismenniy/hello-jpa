@@ -4,6 +4,8 @@ package ua.hello.jpa.p1;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import ua.hello.jpa.p1.entity.Album;
 
 import javax.persistence.EntityManager;
@@ -11,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,14 +24,28 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author dn100985pev on 22.01.16 15:07.
  */
+@RunWith(Parameterized.class)
 public class AlbumTest {
 
 	private EntityManagerFactory entityManagerFactory;
 
+	private final String persistenceUnitName;
+
+	public AlbumTest(String persistenceUnitName) {
+		this.persistenceUnitName = persistenceUnitName;
+	}
+
+	@Parameterized.Parameters
+	public static Collection<Object[]> testParams() {
+		return Arrays.asList(new Object[][] {
+				{"org.hibernate.hsqldb.music-unit"},
+				{"eclipselink.hsqldb.music-unit"},
+		});
+	}
+
 	@Before
 	public void setupJpa() {
-		this.entityManagerFactory = Persistence.createEntityManagerFactory("org.hibernate.hsqldb.music-unit");
-		//this.entityManagerFactory = Persistence.createEntityManagerFactory("org.hibernate.postgres.music-unit");
+		this.entityManagerFactory = Persistence.createEntityManagerFactory(this.persistenceUnitName);
 	}
 
 
