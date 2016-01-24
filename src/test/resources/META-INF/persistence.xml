@@ -22,9 +22,31 @@
         </properties>
 
     </persistence-unit>
-    
-    
-    <persistence-unit name="org.hibernate.postgres.music-unit">
+
+    <persistence-unit name="eclipselink.hsqldb.music-unit" transaction-type="RESOURCE_LOCAL">
+
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+        <class>ua.hello.jpa.p1.entity.Album</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:target/myfiledb;shutdown=true"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+
+            <property name="eclipselink.logging.level" value="FINE"/>
+
+        </properties>
+
+    </persistence-unit>
+
+
+
+    <persistence-unit name="org.hibernate.postgres.music-unit" transaction-type="RESOURCE_LOCAL">
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
